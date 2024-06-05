@@ -21,7 +21,7 @@ dependencies {
     testImplementation("io.github.uchagani:allure-playwright-java:1.1.0")
     testImplementation("io.qameta.allure:allure-java-commons:2.13.5")
     testImplementation("io.qameta.allure:allure-junit5:2.13.5")
-
+    testImplementation("org.testng:testng:7.10.2")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
