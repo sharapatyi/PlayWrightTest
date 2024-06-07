@@ -18,10 +18,12 @@ object BrowserActions {
 
     fun fillInput(selector: String, value: String) {
         page.locator(selector).fill(value)
+
+        this.waitForValue(page, selector, expectedValue = value, )
     }
 
-    fun waitForValue(page: Page, selector: String, expectedValue: String, timeout: Duration) {
-        val endTime = System.currentTimeMillis() + timeout.toMillis()
+    fun waitForValue(page: Page, selector: String, expectedValue: String, timeout: Duration? = Duration.ofMillis(10000)) {
+        val endTime = System.currentTimeMillis() + timeout!!.toMillis()
         while (System.currentTimeMillis() < endTime) {
             val actualValue = page.inputValue(selector)
             if (actualValue == expectedValue) {
@@ -60,5 +62,9 @@ object BrowserActions {
             page.querySelector(selector),
             Page.WaitForFunctionOptions().setTimeout(timeout.toDouble())
         )
+    }
+
+    fun pause(pause: Double) {
+        page.waitForTimeout(pause)
     }
 }

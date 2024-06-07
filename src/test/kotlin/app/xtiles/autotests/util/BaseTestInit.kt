@@ -11,6 +11,8 @@ import com.microsoft.playwright.options.ViewportSize
 
 object BaseTestInit {
 
+    const val API_HOST = "https://stage.xtiles.app/"
+
     private lateinit var playwright: Playwright
     private lateinit var browser: Browser
     private lateinit var page: Page
@@ -21,30 +23,35 @@ object BaseTestInit {
 
         //Налаштовуємо браузер
         browser = playwright.chromium().launch(
-            BrowserType.LaunchOptions().setArgs(
+            BrowserType.LaunchOptions()
+                .setArgs(
                 listOf(
-                    "--user-agent=\"Chrome AutoTests\"",
-                    "--incognito",
                     "--disable-extensions",
                     "--disable-infobars",
                     "--test-type",
                     "--no-sandbox",
-                    "start-maximized",
                     "--disable-browser-side-navigation",
                     "--disable-gpu",
                     "--dns-prefetch-disable",
                     "--disable-infobars"
                 )
-            ).setHeadless(false)
+            )
+                .setHeadless(false)
         )
 
         //Встановлюємо роздільну здатність екрана
-        val contextOptions = NewContextOptions().setViewportSize(ViewportSize(1920, 1080))
+        val contextOptions = NewContextOptions()
+            .setViewportSize(ViewportSize(1920, 1080))
+            .setUserAgent("Chrome AutoTests")
+            .setBypassCSP(true)
+
         val context = browser.newContext(contextOptions)
+
+        page = context.newPage()
 
         //Вичищаємо кукі та локальний стор
         page.context().clearCookies()
-        page.evaluate("() => localStorage.clear()")
+//        page.evaluate("() => localStorage.clear()")
 
         //Додаємо кукі для увімкнення sourcemap
         addCookie("enablesourcemaps", "true")
@@ -64,7 +71,9 @@ object BaseTestInit {
     private fun addCookie(name: String, value: String) {
         page.context().addCookies(
             listOf(
-                Cookie(name, value)
+                Cookie(name, value).apply {
+                    url = "https://stage.xtiles.app/"
+                }
             )
         )
     }

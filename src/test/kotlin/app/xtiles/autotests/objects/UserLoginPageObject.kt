@@ -1,6 +1,7 @@
 package app.xtiles.autotests.objects
 
 import app.xtiles.autotests.util.BrowserActions
+import app.xtiles.autotests.util.BrowserActions.waitForHiddenElement
 import com.microsoft.playwright.Page
 
 object UserLoginPageObject {
@@ -16,6 +17,13 @@ object UserLoginPageObject {
         BrowserActions.waitForVisibleElement(element = inputPassword)
 
         //WHEN
+        BrowserActions.fillInput(inputEmail, email)
+        BrowserActions.fillInput(inputPassword, password)
+        BrowserActions.clickOnButton(loginButton)
 
+        //THEN
+        waitForHiddenElement(inputEmail)
+        waitForHiddenElement(inputPassword)
+        waitForHiddenElement(loginButton)
     }
 }

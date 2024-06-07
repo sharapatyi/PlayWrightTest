@@ -3,6 +3,7 @@ package app.xtiles.autotests
 import app.xtiles.autotests.constants.TestPageIds
 import app.xtiles.autotests.objects.UserLoginPageObject
 import app.xtiles.autotests.util.BaseTestInit
+import app.xtiles.autotests.util.BaseTestInit.API_HOST
 import app.xtiles.autotests.util.BrowserActions
 import com.microsoft.playwright.Page
 import io.qameta.allure.Allure
@@ -29,7 +30,7 @@ open class BaseTest(
     @BeforeAll
     fun setup() {
         page = BaseTestInit.init()
-        page.navigate(TestPageIds.LOGIN_PAGE.id)
+        page.navigate(API_HOST + TestPageIds.LOGIN_PAGE.id)
         BrowserActions.initialize(page)
 
         UserLoginPageObject.login(
