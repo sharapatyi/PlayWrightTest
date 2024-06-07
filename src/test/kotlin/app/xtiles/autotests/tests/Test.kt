@@ -1,5 +1,6 @@
-package app.xtiles.autotests
+package app.xtiles.autotests.tests
 
+import app.xtiles.autotests.BaseTest
 import org.junit.jupiter.api.Test
 
 class Test: BaseTest(
